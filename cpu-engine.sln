@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpu-engine", "cpu-engine\cpu-engine.vcxproj", "{99EB8BA1-1D88-4D23-80E7-CCA2F07EA15F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo", "demo\demo.vcxproj", "{D3B91B22-EB7C-4A91-9187-E8FEC1521D6A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4483BFDF-4859-4037-85C7-3DD8D6EFA19C} = {4483BFDF-4859-4037-85C7-3DD8D6EFA19C}
+		{5CDEE49B-E32A-4DEA-9056-27B9E37D3B8B} = {5CDEE49B-E32A-4DEA-9056-27B9E37D3B8B}
+		{6F756C0C-6F81-4A3B-BE35-EF2AA4A54E32} = {6F756C0C-6F81-4A3B-BE35-EF2AA4A54E32}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "template", "template\template.vcxproj", "{4483BFDF-4859-4037-85C7-3DD8D6EFA19C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpu-render", "cpu-render\cpu-render.vcxproj", "{5CDEE49B-E32A-4DEA-9056-27B9E37D3B8B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpu-core", "cpu-core\cpu-core.vcxproj", "{6F756C0C-6F81-4A3B-BE35-EF2AA4A54E32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99EB8BA1-1D88-4D23-80E7-CCA2F07EA15F}.Debug|x64.ActiveCfg = Debug|x64
+		{99EB8BA1-1D88-4D23-80E7-CCA2F07EA15F}.Debug|x64.Build.0 = Debug|x64
+		{99EB8BA1-1D88-4D23-80E7-CCA2F07EA15F}.Release|x64.ActiveCfg = Release|x64
+		{99EB8BA1-1D88-4D23-80E7-CCA2F07EA15F}.Release|x64.Build.0 = Release|x64
+		{D3B91B22-EB7C-4A91-9187-E8FEC1521D6A}.Debug|x64.ActiveCfg = Debug|x64
+		{D3B91B22-EB7C-4A91-9187-E8FEC1521D6A}.Debug|x64.Build.0 = Debug|x64
+		{D3B91B22-EB7C-4A91-9187-E8FEC1521D6A}.Release|x64.ActiveCfg = Release|x64
+		{D3B91B22-EB7C-4A91-9187-E8FEC1521D6A}.Release|x64.Build.0 = Release|x64
+		{4483BFDF-4859-4037-85C7-3DD8D6EFA19C}.Debug|x64.ActiveCfg = Debug|x64
+		{4483BFDF-4859-4037-85C7-3DD8D6EFA19C}.Debug|x64.Build.0 = Debug|x64
+		{4483BFDF-4859-4037-85C7-3DD8D6EFA19C}.Release|x64.ActiveCfg = Release|x64
+		{4483BFDF-4859-4037-85C7-3DD8D6EFA19C}.Release|x64.Build.0 = Release|x64
+		{5CDEE49B-E32A-4DEA-9056-27B9E37D3B8B}.Debug|x64.ActiveCfg = Debug|x64
+		{5CDEE49B-E32A-4DEA-9056-27B9E37D3B8B}.Debug|x64.Build.0 = Debug|x64
+		{5CDEE49B-E32A-4DEA-9056-27B9E37D3B8B}.Release|x64.ActiveCfg = Release|x64
+		{5CDEE49B-E32A-4DEA-9056-27B9E37D3B8B}.Release|x64.Build.0 = Release|x64
+		{6F756C0C-6F81-4A3B-BE35-EF2AA4A54E32}.Debug|x64.ActiveCfg = Debug|x64
+		{6F756C0C-6F81-4A3B-BE35-EF2AA4A54E32}.Debug|x64.Build.0 = Debug|x64
+		{6F756C0C-6F81-4A3B-BE35-EF2AA4A54E32}.Release|x64.ActiveCfg = Release|x64
+		{6F756C0C-6F81-4A3B-BE35-EF2AA4A54E32}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73DCBD08-F8E9-4C8E-94E4-148514E56ADB}
+	EndGlobalSection
+EndGlobal

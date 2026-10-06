@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="particle">
+      <UniqueIdentifier>{440addb0-53e6-4421-a22f-3da9c6df718d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thread">
+      <UniqueIdentifier>{d15ce2a2-6e86-44fb-ac07-ccd107b4bcc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="camera">
+      <UniqueIdentifier>{efdb362c-0370-44ca-8ded-51f1af3b5b43}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cpu-render.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_device.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_font.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_particle_physics.h">
+      <Filter>particle</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_particle_data.h">
+      <Filter>particle</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_particle_emitter.h">
+      <Filter>particle</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_sprite.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_material.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_draw.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_pixel.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_ps_io.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_vertex_out.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_texture.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_rt.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_tile.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_frustum.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_camera.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_global.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu_light.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cpu-render.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_device.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_font.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_particle_data.cpp">
+      <Filter>particle</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_particle_physics.cpp">
+      <Filter>particle</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_particle_emitter.cpp">
+      <Filter>particle</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_sprite.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_material.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_draw.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_pixel.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_ps_io.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_vertex_out.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_texture.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_rt.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_tile.cpp">
+      <Filter>thread</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_frustum.cpp">
+      <Filter>camera</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_camera.cpp">
+      <Filter>camera</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_global.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu_light.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

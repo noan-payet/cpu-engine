@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{5cdee49b-e32a-4dea-9056-27b9e37d3b8b}</ProjectGuid>
+    <RootNamespace>cpurender</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="cpu-render.h" />
+    <ClInclude Include="cpu_camera.h" />
+    <ClInclude Include="cpu_draw.h" />
+    <ClInclude Include="cpu_font.h" />
+    <ClInclude Include="cpu_frustum.h" />
+    <ClInclude Include="cpu_global.h" />
+    <ClInclude Include="cpu_light.h" />
+    <ClInclude Include="cpu_material.h" />
+    <ClInclude Include="cpu_particle_data.h" />
+    <ClInclude Include="cpu_particle_physics.h" />
+    <ClInclude Include="cpu_pixel.h" />
+    <ClInclude Include="cpu_ps_io.h" />
+    <ClInclude Include="cpu_rt.h" />
+    <ClInclude Include="cpu_sprite.h" />
+    <ClInclude Include="cpu_device.h" />
+    <ClInclude Include="cpu_particle_emitter.h" />
+    <ClInclude Include="cpu_vertex_out.h" />
+    <ClInclude Include="cpu_tile.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="cpu_texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cpu-render.cpp" />
+    <ClCompile Include="cpu_camera.cpp" />
+    <ClCompile Include="cpu_draw.cpp" />
+    <ClCompile Include="cpu_font.cpp" />
+    <ClCompile Include="cpu_frustum.cpp" />
+    <ClCompile Include="cpu_global.cpp" />
+    <ClCompile Include="cpu_light.cpp" />
+    <ClCompile Include="cpu_material.cpp" />
+    <ClCompile Include="cpu_particle_data.cpp" />
+    <ClCompile Include="cpu_particle_physics.cpp" />
+    <ClCompile Include="cpu_pixel.cpp" />
+    <ClCompile Include="cpu_ps_io.cpp" />
+    <ClCompile Include="cpu_rt.cpp" />
+    <ClCompile Include="cpu_sprite.cpp" />
+    <ClCompile Include="cpu_device.cpp" />
+    <ClCompile Include="cpu_particle_emitter.cpp" />
+    <ClCompile Include="cpu_vertex_out.cpp" />
+    <ClCompile Include="cpu_tile.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="cpu_texture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\cpu-core\cpu-core.vcxproj">
+      <Project>{6f756c0c-6f81-4a3b-be35-ef2aa4a54e32}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

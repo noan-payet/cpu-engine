@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{6f756c0c-6f81-4a3b-be35-ef2aa4a54e32}</ProjectGuid>
+    <RootNamespace>cpucore</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="cpu-core.h" />
+    <ClInclude Include="cpu_aabb.h" />
+    <ClInclude Include="cpu_atomic.h" />
+    <ClInclude Include="cpu_audio.h" />
+    <ClInclude Include="cpu_obj.h" />
+    <ClInclude Include="cpu_player.h" />
+    <ClInclude Include="cpu_sound.h" />
+    <ClInclude Include="cpu_vinput.h" />
+    <ClInclude Include="cpu_mesh.h" />
+    <ClInclude Include="cpu_obb.h" />
+    <ClInclude Include="cpu_object.h" />
+    <ClInclude Include="cpu_ray.h" />
+    <ClInclude Include="cpu_rectangle.h" />
+    <ClInclude Include="cpu_sphere.h" />
+    <ClInclude Include="cpu_transform.h" />
+    <ClInclude Include="cpu_triangle.h" />
+    <ClInclude Include="cpu_vertex.h" />
+    <ClInclude Include="cpu_function.h" />
+    <ClInclude Include="cpu_vec3_cmp.h" />
+    <ClInclude Include="cpu_global.h" />
+    <ClInclude Include="cpu_img32.h" />
+    <ClInclude Include="cpu_input.h" />
+    <ClInclude Include="cpu_window.h" />
+    <ClInclude Include="cpu_xinput.h" />
+    <ClInclude Include="cpu_xinput_state.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="cpu_png32.h" />
+    <ClInclude Include="cpu_thread.h" />
+    <ClInclude Include="cpu_time.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cpu-core.cpp" />
+    <ClCompile Include="cpu_aabb.cpp" />
+    <ClCompile Include="cpu_atomic.cpp" />
+    <ClCompile Include="cpu_audio.cpp" />
+    <ClCompile Include="cpu_obj.cpp" />
+    <ClCompile Include="cpu_player.cpp" />
+    <ClCompile Include="cpu_sound.cpp" />
+    <ClCompile Include="cpu_vinput.cpp" />
+    <ClCompile Include="cpu_mesh.cpp" />
+    <ClCompile Include="cpu_obb.cpp" />
+    <ClCompile Include="cpu_object.cpp" />
+    <ClCompile Include="cpu_ray.cpp" />
+    <ClCompile Include="cpu_rectangle.cpp" />
+    <ClCompile Include="cpu_sphere.cpp" />
+    <ClCompile Include="cpu_transform.cpp" />
+    <ClCompile Include="cpu_triangle.cpp" />
+    <ClCompile Include="cpu_vertex.cpp" />
+    <ClCompile Include="cpu_function.cpp" />
+    <ClCompile Include="cpu_vec3_cmp.cpp" />
+    <ClCompile Include="cpu_global.cpp" />
+    <ClCompile Include="cpu_img32.cpp" />
+    <ClCompile Include="cpu_input.cpp" />
+    <ClCompile Include="cpu_window.cpp" />
+    <ClCompile Include="cpu_xinput.cpp" />
+    <ClCompile Include="cpu_xinput_state.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="cpu_png32.cpp" />
+    <ClCompile Include="cpu_thread.cpp" />
+    <ClCompile Include="cpu_time.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

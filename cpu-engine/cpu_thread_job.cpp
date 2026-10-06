@@ -1,0 +1,73 @@
+#include "pch.h"
+
+cpu_thread_job::~cpu_thread_job()
+{
+	CloseHandle(m_hEventStart);
+	CloseHandle(m_hEventEnd);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void cpu_thread_job::Create(int count)
+{
+	m_count = count;
+	m_hEventStart = CreateEvent(nullptr, FALSE, FALSE, nullptr);
+	m_hEventEnd = CreateEvent(nullptr, FALSE, FALSE, nullptr);
+	m_pJob = nullptr;
+	m_isWorking = false;
+}
+
+void cpu_thread_job::Stop()
+{
+	QuitAsap();
+	PostStartEvent(nullptr);
+	Wait();
+}
+
+void cpu_thread_job::PostStartEvent(cpu_job* pJob)
+{
+	m_pJob = pJob;
+	SetEvent(m_hEventStart);
+}
+
+void cpu_thread_job::PostEndEvent()
+{
+	SetEvent(m_hEventEnd);
+}
+
+void cpu_thread_job::WaitStartEvent()
+{
+	WaitForSingleObject(m_hEventStart, INFINITE);
+}
+
+void cpu_thread_job::WaitEndEvent()
+{
+	WaitForSingleObject(m_hEventEnd, INFINITE);
+}
+
+void cpu_thread_job::OnCallback()
+{
+	while ( true )
+	{
+		WaitStartEvent();
+
+		if ( m_quitAsap )
+			break;
+
+		m_isWorking = true;
+		while ( true )
+		{
+			int index = cpuEngine.NextTile();
+			if ( index>=m_count )
+				break;
+
+			if ( m_pJob )
+				m_pJob->OnJob(index);
+		}
+		m_isWorking = false;
+
+		PostEndEvent();
+	}
+}
