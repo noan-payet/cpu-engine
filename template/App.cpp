@@ -40,11 +40,31 @@ void App::ObjectCollision()
 	for (auto it = m_object.begin(); it != m_object.end(); ++it)
 	{
 		cpu_entity* pObject = *it;
-		if (pObject->aabb.Contains(m_pCatcher->transform.pos))
+
+		float oRadius = pObject->sphere.radius;
+		float cRadius = m_pCatcher->sphere.radius;
+
+		float dRadius = oRadius + cRadius;
+		dRadius = dRadius * dRadius;
+
+		//XMFLOAT3 oPos = pObject->sphere.center;
+		//XMFLOAT3 cPos = m_pCatcher->sphere.center;
+
+		XMVECTOR oPos = XMLoadFloat3(&pObject->sphere.center);
+		XMVECTOR cPos = XMLoadFloat3(&m_pCatcher->sphere.center);
+
+		XMVECTOR vPos = cPos - oPos;
+		vPos = vPos * vPos;
+		float vX = XMVectorGetX(vPos);
+		float vY = XMVectorGetY(vPos);
+		float vZ = XMVectorGetZ(vPos);
+
+		float dPos = vX + vY + vZ;
+
+		if (dPos <= dRadius)
 		{
-			cpu_stats& stats = *cpuEngine.GetStats();
-			stats.clipEntityCount++;
-			pObject->dead;
+			m_gInfo.score++;
+			cpuEngine.Release(pObject);
 		}
 	}
 }
@@ -74,6 +94,11 @@ void App::OnStart()
 
 	m_objectSpeed = 10.f;
 
+	// Player Info
+	m_gInfo.life = 3;
+	m_gInfo.score = 0;
+
+	// Camera
 	cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f * 3, -8.f * 3);
 
 	m_p45Cam = *cpuEngine.GetCamera();
@@ -124,7 +149,7 @@ void App::OnUpdate()
 	{
 		SpawnObject();
 		second = 0;
-		if (difficulty != 1)
+		if (difficulty != 2 && m_gInfo.score % 10 == 1)
 			difficulty -= 1;
 	}
 
@@ -136,15 +161,18 @@ void App::OnUpdate()
 	{
 		cpu_entity* pMissile = *it;
 		pMissile->transform.pos.y -= dt;
-		if (pMissile->lifetime > 12.0f)
-			cpuEngine.Release(pMissile);
+		/*if (pMissile->lifetime > 12.0f)
+			cpuEngine.Release(pMissile);*/
 	}
 
 	// Purge missiles
 	for (auto it = m_object.begin(); it != m_object.end(); )
 	{
 		if ((*it)->dead)
+		{
 			it = m_object.erase(it);
+			/*m_gInfo.life--;*/
+		}
 		else
 			++it;
 	}
@@ -186,13 +214,15 @@ void App::OnRender(int pass)
 		// Debug
 		cpu_stats& stats = *cpuEngine.GetStats();
 		std::string info = CPU_STR(cpuTime.fps) + " fps, ";
-		info += CPU_STR(stats.drawnTriangleCount) + " triangles, ";
-		info += CPU_STR(stats.clipEntityCount) + " clipped entities\n";
+		info += CPU_STR(stats.drawnTriangleCount) + " triangles\n";
+		/*info += CPU_STR(stats.clipEntityCount) + " clipped entities\n";
 		info += CPU_STR(m_object.size()) + " missiles, ";
 		info += CPU_STR(cpuEngine.GetParticleData()->alive) + " particles, ";
 		info += CPU_STR(stats.threadCount) + " threads, ";
 		info += CPU_STR(stats.tileCount) + " tiles,";
-		info += " time " + CPU_STR(cpuTime.total);
+		info += " time " + CPU_STR(cpuTime.total);*/
+		info += CPU_STR(m_gInfo.life) + " life, ";
+		info += CPU_STR(m_gInfo.score) + " score";
 
 		// Ray cast
 		cpu_ray ray;
