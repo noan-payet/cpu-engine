@@ -33,12 +33,6 @@ void App::SpawnObject()
 	m_object.push_back(pObject);
 }
 
-void App::ObjectShader(cpu_ps_io& io)
-{
-	// garder seulement le rouge du pixel éclairé
-	io.color.x = io.p.color.x;
-}
-
 void App::OnStart()
 {
 	// YOUR CODE HERE
@@ -178,4 +172,10 @@ void App::MyPixelShader(cpu_ps_io& io)
 {
 	// YOUR CODE HERE
 	io.color = io.p.color;
+}
+
+void App::ObjectShader(cpu_ps_io& io)
+{
+	// garder seulement le rouge du pixel éclairé
+	io.color.x = io.p.color.x;
 }

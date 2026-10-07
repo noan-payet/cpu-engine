@@ -10,14 +10,13 @@ public:
 
 	void SpawnObject();
 
-	static void ObjectShader(cpu_ps_io& io);
-
 	void OnStart();
 	void OnUpdate();
 	void OnExit();
 	void OnRender(int pass);
 
 	static void MyPixelShader(cpu_ps_io& io);
+	static void ObjectShader(cpu_ps_io& io);
 
 private:
 	inline static App* s_pApp = nullptr;
