@@ -9,6 +9,7 @@ public:
 	static App& GetInstance() { return *s_pApp; }
 
 	void SpawnObject();
+	void ObjectCollision();
 
 	void OnStart();
 	void OnUpdate();
@@ -41,4 +42,8 @@ private:
 	float m_playerMove = 0.f;
 	float second = 0;
 	int difficulty = 4;
+
+	// Camera
+	cpu_camera m_p45Cam;
+	cpu_camera m_p90Cam;
 };

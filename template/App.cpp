@@ -26,11 +26,27 @@ void App::SpawnObject()
 
 	//float time = cpuTime.total;
 	//pObject->transform.OrbitAroundAxis(m_pCenter->transform.pos, CPU_VEC3_UP, 3.f, time * 2.f);
-	pObject->transform.SetPosition(cos(rand() % 6 + 1) * 3, 10.f, sin(rand() % 6 + 1) * 3);
+	float angle = rand() % 6 + 1;
+	pObject->transform.SetPosition(cos(angle) * 3, 10.f, sin(angle) * 3);
 	//pObject->transform.SetPosition(0,0,0);
 
 	//pObject->transform.Move(1.5f);
+
 	m_object.push_back(pObject);
+}
+
+void App::ObjectCollision()
+{
+	for (auto it = m_object.begin(); it != m_object.end(); ++it)
+	{
+		cpu_entity* pObject = *it;
+		if (pObject->aabb.Contains(m_pCatcher->transform.pos))
+		{
+			cpu_stats& stats = *cpuEngine.GetStats();
+			stats.clipEntityCount++;
+			pObject->dead;
+		}
+	}
 }
 
 void App::OnStart()
@@ -58,8 +74,17 @@ void App::OnStart()
 
 	m_objectSpeed = 10.f;
 
-	cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f *3, -8.f*3);
-	cpuEngine.GetCamera()->transform.AddYPR(0.f, 45 * (XM_PI / 180));
+	cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f * 3, -8.f * 3);
+
+	m_p45Cam = *cpuEngine.GetCamera();
+	m_p90Cam = *cpuEngine.GetCamera();
+
+	m_p45Cam.transform.AddYPR(0.f, 45 * (XM_PI / 180));
+	m_p90Cam.transform.AddYPR(0.f, 90 * (XM_PI / 180));
+
+	cpuEngine.GetCamera()->transform.quat = m_p45Cam.transform.quat;
+	cpuEngine.GetCamera()->transform.SetRotationFromQuaternion();
+	
 }
 
 void App::OnUpdate()
@@ -67,6 +92,22 @@ void App::OnUpdate()
 	// YOUR CODE HERE
 	float dt = cpuTime.delta;
 	float time = cpuTime.total;
+
+	// Camera Mode
+	if (cpuInput.vi.IsKeyPressed(VK_F1))
+	{
+		cpuEngine.GetCamera()->transform.quat = m_p45Cam.transform.quat;
+		cpuEngine.GetCamera()->transform.SetRotationFromQuaternion();
+
+		cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f * 3, -8.f * 3);
+	}
+	if (cpuInput.vi.IsKeyPressed(VK_F2))
+	{
+		cpuEngine.GetCamera()->transform.quat = m_p90Cam.transform.quat;
+		cpuEngine.GetCamera()->transform.SetRotationFromQuaternion();
+
+		cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f * 3, 0.f);
+	}
 
 	// Player Move
 	if (cpuInput.IsLeft())
@@ -87,12 +128,15 @@ void App::OnUpdate()
 			difficulty -= 1;
 	}
 
+	// Collision
+	ObjectCollision();
+
 	// Move missiles
 	for (auto it = m_object.begin(); it != m_object.end(); ++it)
 	{
 		cpu_entity* pMissile = *it;
 		pMissile->transform.pos.y -= dt;
-		if (pMissile->lifetime > 10.0f)
+		if (pMissile->lifetime > 12.0f)
 			cpuEngine.Release(pMissile);
 	}
 
