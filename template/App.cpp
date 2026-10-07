@@ -22,16 +22,21 @@ void App::SpawnObject()
 	cpu_entity* pObject = cpuEngine.CreateEntity();
 	pObject->pMesh = &m_meshObject;
 	pObject->pMaterial = &m_materialObject;
-	//pObject->transform.SetScaling(0.2f);
+	pObject->transform.SetScaling(0.2f);
 
 	//float time = cpuTime.total;
 	//pObject->transform.OrbitAroundAxis(m_pCenter->transform.pos, CPU_VEC3_UP, 3.f, time * 2.f);
-	//pObject->transform.SetPosition(cos(rand() % 6 + 1) * 3, 10.f, sin(rand() % 6 + 1) * 3);
-	pObject->transform.pos = m_pCatcher->transform.pos;
+	pObject->transform.SetPosition(cos(rand() % 6 + 1) * 3, 10.f, sin(rand() % 6 + 1) * 3);
+	//pObject->transform.SetPosition(0,0,0);
 
-	pObject->transform.LookAt(pObject->transform.pos.x, pObject->transform.pos.y - 10.f, pObject->transform.pos.z, CPU_VEC3_UP);
 	//pObject->transform.Move(1.5f);
 	m_object.push_back(pObject);
+}
+
+void App::ObjectShader(cpu_ps_io& io)
+{
+	// garder seulement le rouge du pixel éclairé
+	io.color.x = io.p.color.x;
 }
 
 void App::OnStart()
@@ -46,7 +51,7 @@ void App::OnStart()
 	// UI
 	// Shader
 	m_materialCatcher.ps = MyPixelShader;
-	m_materialObject.ps = MyPixelShader;
+	m_materialObject.ps = ObjectShader;
 
 	// 3D
 	m_pCenter = cpuEngine.CreateEntity();
@@ -78,14 +83,21 @@ void App::OnUpdate()
 	m_pCatcher->transform.SetPosition(cos(m_playerMove) * 3, 0.f, sin(m_playerMove) * 3);
 
 	// Object Spawn
-	if (time / 1 == (int)time)
+	second += dt;
+
+	if (second > difficulty)
+	{
 		SpawnObject();
+		second = 0;
+		if (difficulty != 1)
+			difficulty -= 1;
+	}
 
 	// Move missiles
 	for (auto it = m_object.begin(); it != m_object.end(); ++it)
 	{
 		cpu_entity* pMissile = *it;
-		pMissile->transform.Move(dt * m_objectSpeed);
+		pMissile->transform.pos.y -= dt;
 		if (pMissile->lifetime > 10.0f)
 			cpuEngine.Release(pMissile);
 	}
@@ -141,7 +153,8 @@ void App::OnRender(int pass)
 		info += CPU_STR(m_object.size()) + " missiles, ";
 		info += CPU_STR(cpuEngine.GetParticleData()->alive) + " particles, ";
 		info += CPU_STR(stats.threadCount) + " threads, ";
-		info += CPU_STR(stats.tileCount) + " tiles";
+		info += CPU_STR(stats.tileCount) + " tiles,";
+		info += " time " + CPU_STR(cpuTime.total);
 
 		// Ray cast
 		cpu_ray ray;

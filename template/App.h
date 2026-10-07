@@ -10,6 +10,8 @@ public:
 
 	void SpawnObject();
 
+	static void ObjectShader(cpu_ps_io& io);
+
 	void OnStart();
 	void OnUpdate();
 	void OnExit();
@@ -38,4 +40,6 @@ private:
 
 	// Gameplay
 	float m_playerMove = 0.f;
+	float second = 0;
+	int difficulty = 4;
 };
