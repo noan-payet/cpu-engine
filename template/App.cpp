@@ -50,8 +50,8 @@ void App::ObjectCollision()
 		//XMFLOAT3 oPos = pObject->sphere.center;
 		//XMFLOAT3 cPos = m_pCatcher->sphere.center;
 
-		XMVECTOR oPos = XMLoadFloat3(&pObject->sphere.center);
-		XMVECTOR cPos = XMLoadFloat3(&m_pCatcher->sphere.center);
+		FXMVECTOR oPos = XMLoadFloat3(&pObject->sphere.center);
+		GXMVECTOR cPos = XMLoadFloat3(&m_pCatcher->sphere.center);
 
 		XMVECTOR vPos = cPos - oPos;
 		vPos = vPos * vPos;
