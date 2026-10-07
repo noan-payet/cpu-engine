@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36203.30 d17.14
+VisualStudioVersion = 17.14.36203.30
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpu-engine", "cpu-engine\cpu-engine.vcxproj", "{99EB8BA1-1D88-4D23-80E7-CCA2F07EA15F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6F756C0C-6F81-4A3B-BE35-EF2AA4A54E32} = {6F756C0C-6F81-4A3B-BE35-EF2AA4A54E32}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo", "demo\demo.vcxproj", "{D3B91B22-EB7C-4A91-9187-E8FEC1521D6A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -13,6 +16,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo", "demo\demo.vcxproj",
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "template", "template\template.vcxproj", "{4483BFDF-4859-4037-85C7-3DD8D6EFA19C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6F756C0C-6F81-4A3B-BE35-EF2AA4A54E32} = {6F756C0C-6F81-4A3B-BE35-EF2AA4A54E32}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpu-render", "cpu-render\cpu-render.vcxproj", "{5CDEE49B-E32A-4DEA-9056-27B9E37D3B8B}"
 EndProject
