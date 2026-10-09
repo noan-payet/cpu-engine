@@ -26,7 +26,8 @@ void App::SpawnObject()
 
 	//float time = cpuTime.total;
 	//pObject->transform.OrbitAroundAxis(m_pCenter->transform.pos, CPU_VEC3_UP, 3.f, time * 2.f);
-	float angle = rand() % Radiant(360);
+	float angle = rand() % 360 + 1;
+	angle = Radiant(angle);
 	pObject->transform.SetPosition(cos(angle) * 2.85f, 10.f, sin(angle) * 2.85f);
 	//pObject->transform.SetPosition(0,0,0);
 
@@ -62,6 +63,7 @@ void App::ObjectCollision()
 		float cRadius = m_pCatcher->sphere.radius + m_pCatcher->transform.sca.y;
 
 		float dRadius = oRadius + cRadius;
+		//dRadius = dRadius * dRadius;
 
 		//XMFLOAT3 oPos = pObject->sphere.center;
 		//XMFLOAT3 cPos = m_pCatcher->sphere.center;
@@ -75,7 +77,7 @@ void App::ObjectCollision()
 		float vY = XMVectorGetY(vPos);
 		float vZ = XMVectorGetZ(vPos);
 
-		float dPos = sqrt(vX + vY + vZ);
+		float dPos = vX + vY + vZ;
 
 		if (dPos <= dRadius)
 		{
@@ -167,9 +169,9 @@ void App::OnUpdate()
 
 	// Player Move
 	if (cpuInput.IsLeft())
-		m_playerMove -= dt * 2.f;
-	if (cpuInput.IsRight())
 		m_playerMove += dt * 2.f;
+	if (cpuInput.IsRight())
+		m_playerMove -= dt * 2.f;
 
 	m_pCatcher->transform.SetPosition(cos(m_playerMove) * 3, 0.5f, sin(m_playerMove) * 3);
 
