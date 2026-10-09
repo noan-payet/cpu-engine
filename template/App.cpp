@@ -26,13 +26,30 @@ void App::SpawnObject()
 
 	//float time = cpuTime.total;
 	//pObject->transform.OrbitAroundAxis(m_pCenter->transform.pos, CPU_VEC3_UP, 3.f, time * 2.f);
-	float angle = rand() % 6 + 1;
-	pObject->transform.SetPosition(cos(angle) * 3, 10.f, sin(angle) * 3);
+	float angle = rand() % Radiant(360);
+	pObject->transform.SetPosition(cos(angle) * 2.85f, 10.f, sin(angle) * 2.85f);
 	//pObject->transform.SetPosition(0,0,0);
 
 	//pObject->transform.Move(1.5f);
 
+	XMFLOAT3 particlePos = pObject->transform.pos;
+	particlePos.y = 0.5f;
+
+	SpawnParticles(particlePos);
+
 	m_object.push_back(pObject);
+}
+
+void App::SpawnParticles(XMFLOAT3 pos)
+{
+	cpu_particle_emitter* pEmitter = cpuEngine.CreateParticleEmitter();
+	pEmitter->rate = 0.1f;
+	pEmitter->colorMin = cpu::ToColor(0, 255, 0);
+	pEmitter->colorMax = cpu::ToColor(255, 0, 0);
+
+	pEmitter->pos = pos;
+
+	m_pEmitter.push_back(pEmitter);
 }
 
 void App::ObjectCollision()
@@ -76,15 +93,26 @@ void App::OnStart()
 	m_font.Create(cpuDevice.GetHeight() <= 512 ? 14 : 28);
 	m_meshSphere.CreateSphere(2.0f, 12, 12);
 	m_meshObject.CreateSphere(2.0f, 12, 12);
+	XMFLOAT3 black = { 0,0,0 };
+	m_meshCircle.CreateCircle(3.5f, 360, black);
+	m_meshCenterCircle.CreateCircle(2.5f, 360);
 
 	// UI
 	// Shader
 	m_materialCatcher.ps = MyPixelShader;
 	m_materialObject.ps = ObjectShader;
+	m_materialCircle.ps = MyPixelShader;
 
 	// 3D
-	m_pCenter = cpuEngine.CreateEntity();
-	m_pCenter->transform.SetPosition(0.f, 0.f, 0.f);
+	m_pCircle = cpuEngine.CreateEntity();
+	m_pCircle->transform.SetPosition(0.f, 0.f, 0.f);
+	m_pCircle->pMesh = &m_meshCircle;
+	m_pCircle->pMaterial = &m_materialCircle;
+
+	m_pCenterCircle = cpuEngine.CreateEntity();
+	m_pCenterCircle->transform.SetPosition(0.f, 0.5f, 0.f);
+	m_pCenterCircle->pMesh = &m_meshCenterCircle;
+	m_pCenterCircle->pMaterial = &m_materialCircle;
 
 	m_pCatcher = cpuEngine.CreateEntity();
 	m_pCatcher->pMesh = &m_meshSphere;
@@ -97,8 +125,12 @@ void App::OnStart()
 	m_gInfo.life = 3;
 	m_gInfo.score = 0;
 
+	// Particle
+	cpuEngine.GetParticleData()->Create(20000000);
+	cpuEngine.GetParticlePhysics()->gy = -0.5f;
+
 	// Camera
-	cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f * 3, -8.f * 3);
+	cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f, -8.f);
 
 	m_p45Cam = *cpuEngine.GetCamera();
 	m_p90Cam = *cpuEngine.GetCamera();
@@ -123,7 +155,7 @@ void App::OnUpdate()
 		cpuEngine.GetCamera()->transform.quat = m_p45Cam.transform.quat;
 		cpuEngine.GetCamera()->transform.SetRotationFromQuaternion();
 
-		cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f * 3, -8.f * 3);
+		cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f, -8.f);
 	}
 	if (cpuInput.vi.IsKeyPressed(VK_F2))
 	{
@@ -139,7 +171,7 @@ void App::OnUpdate()
 	if (cpuInput.IsRight())
 		m_playerMove += dt * 2.f;
 
-	m_pCatcher->transform.SetPosition(cos(m_playerMove) * 3, 0.f, sin(m_playerMove) * 3);
+	m_pCatcher->transform.SetPosition(cos(m_playerMove) * 3, 0.5f, sin(m_playerMove) * 3);
 
 	// Object Spawn
 	second += dt;
@@ -160,17 +192,57 @@ void App::OnUpdate()
 	{
 		cpu_entity* pMissile = *it;
 		pMissile->transform.pos.y -= dt;
-		/*if (pMissile->lifetime > 12.0f)
-			cpuEngine.Release(pMissile);*/
 	}
 
 	// Purge missiles
 	for (auto it = m_object.begin(); it != m_object.end(); )
 	{
-		if ((*it)->dead)
+		cpu_entity* pMissile = *it;
+		if (pMissile->transform.pos.y <= 0.5f)
 		{
+			m_gInfo.life--;
+
+			for (auto itE = m_pEmitter.begin(); itE != m_pEmitter.end();)
+			{
+				cpu_particle_emitter* pEmitter = *itE;
+				const XMFLOAT2 ePos = { pEmitter->pos.x, pEmitter->pos.z };
+				const XMFLOAT2 oPos = { pMissile->transform.pos.x, pMissile->transform.pos.z };
+				FXMVECTOR eVPos = XMLoadFloat2(&ePos);
+				GXMVECTOR oVPos = XMLoadFloat2(&oPos);
+
+				if (XMVector2Equal(eVPos, oVPos))
+				{
+					cpuEngine.Release(pEmitter);
+					itE = m_pEmitter.erase(itE);
+				}
+				else
+					++itE;
+			}
+
+			cpuEngine.Release(pMissile);
 			it = m_object.erase(it);
-			/*m_gInfo.life--;*/
+		}
+		else if ((*it)->dead)
+		{
+			for (auto itE = m_pEmitter.begin(); itE != m_pEmitter.end();)
+			{
+				cpu_particle_emitter* pEmitter = *itE;
+				const XMFLOAT2 ePos = { pEmitter->pos.x, pEmitter->pos.z };
+				const XMFLOAT2 oPos = { pMissile->transform.pos.x, pMissile->transform.pos.z };
+				FXMVECTOR eVPos = XMLoadFloat2(&ePos);
+				GXMVECTOR oVPos = XMLoadFloat2(&oPos);
+
+				if (XMVector2Equal(eVPos, oVPos))
+				{
+					cpuEngine.Release(pEmitter);
+					itE = m_pEmitter.erase(itE);
+				}
+				else
+					++itE;
+			}
+
+			cpuEngine.Release(pMissile);
+			it = m_object.erase(it);
 		}
 		else
 			++it;
@@ -239,6 +311,11 @@ void App::OnRender(int pass)
 		break;
 	}
 	}
+}
+
+int App::Radiant(int degree)
+{
+	return degree * XM_PI / 180;
 }
 
 void App::MyPixelShader(cpu_ps_io& io)
