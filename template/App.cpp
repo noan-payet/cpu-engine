@@ -41,11 +41,10 @@ void App::ObjectCollision()
 	{
 		cpu_entity* pObject = *it;
 
-		float oRadius = pObject->sphere.radius;
-		float cRadius = m_pCatcher->sphere.radius;
+		float oRadius = pObject->sphere.radius + pObject->transform.sca.y;
+		float cRadius = m_pCatcher->sphere.radius + m_pCatcher->transform.sca.y;
 
 		float dRadius = oRadius + cRadius;
-		dRadius = dRadius * dRadius;
 
 		//XMFLOAT3 oPos = pObject->sphere.center;
 		//XMFLOAT3 cPos = m_pCatcher->sphere.center;
@@ -59,7 +58,7 @@ void App::ObjectCollision()
 		float vY = XMVectorGetY(vPos);
 		float vZ = XMVectorGetZ(vPos);
 
-		float dPos = vX + vY + vZ;
+		float dPos = sqrt(vX + vY + vZ);
 
 		if (dPos <= dRadius)
 		{
