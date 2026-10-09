@@ -63,4 +63,7 @@ private:
 	// Camera
 	cpu_camera m_p45Cam;
 	cpu_camera m_p90Cam;
+
+protected:
+	cpu_fsm<App>* m_pLoop;
 };

@@ -253,6 +253,10 @@ void App::OnUpdate()
 			++it;
 	}
 
+	// Die
+	if (m_gInfo.life <= 0)
+		cpuEngine.Quit();
+
 	// Quit
 	if (cpuInput.IsBackPressed())
 		cpuEngine.Quit();
@@ -262,6 +266,7 @@ void App::OnExit()
 {
 	// YOUR CODE HERE
 	m_object.clear();
+	m_pEmitter.clear();
 }
 
 void App::OnRender(int pass)
