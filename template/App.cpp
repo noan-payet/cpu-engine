@@ -170,6 +170,18 @@ void App::OnUpdate()
 		cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f * 3, 0.f);
 	}
 
+	camMove += camSpeed * dt;
+
+	if (camMove >= 1)
+		camSpeed = -1;
+	if (camMove <= -1)
+		camSpeed = 1;
+
+	XMFLOAT3 camDir = cpuEngine.GetCamera()->transform.dir;
+	float angle = Radiant(camDir.x * camDir.x + camDir.y * camDir.y + camDir.z * camDir.z) + camMove * 30;
+	cpuEngine.GetCamera()->transform.pos.x += cos(-camMove);
+	cpuEngine.GetCamera()->transform.pos.y += sin(camMove);
+
 	// Player Move
 	if (cpuInput.IsLeft())
 		m_playerMove += dt * 2.f;

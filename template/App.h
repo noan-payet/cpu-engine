@@ -56,6 +56,8 @@ private:
 	float m_playerMove = 0.f;
 	float second = 0;
 	int difficulty = 4;
+	int camSpeed = 1;
+	float camMove = 0;
 
 	// Info
 	gInfo m_gInfo;
