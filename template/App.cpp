@@ -48,6 +48,9 @@ void App::SpawnParticles(XMFLOAT3 pos)
 	pEmitter->colorMin = cpu::ToColor(0, 255, 0);
 	pEmitter->colorMax = cpu::ToColor(255, 0, 0);
 
+	pEmitter->spread = 0.1f;
+	pEmitter->speedMax = 0.75f;
+
 	pEmitter->pos = pos;
 
 	m_pEmitter.push_back(pEmitter);
@@ -128,7 +131,7 @@ void App::OnStart()
 	m_gInfo.score = 0;
 
 	// Particle
-	cpuEngine.GetParticleData()->Create(20000000);
+	cpuEngine.GetParticleData()->Create(200000);
 	cpuEngine.GetParticlePhysics()->gy = -0.5f;
 
 	// Camera
