@@ -9,6 +9,7 @@ public:
 	// Scaling
 	XMFLOAT3 sca;
 
+
 	// Rotation
 	XMFLOAT3 dir;
 	XMFLOAT3 right;
