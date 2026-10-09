@@ -9,6 +9,7 @@ public:
 	static App& GetInstance() { return *s_pApp; }
 
 	void SpawnObject();
+	void ObjectCollision();
 
 	void OnStart();
 	void OnUpdate();
@@ -17,6 +18,12 @@ public:
 
 	static void MyPixelShader(cpu_ps_io& io);
 	static void ObjectShader(cpu_ps_io& io);
+
+	struct gInfo
+	{
+		int score = 0;
+		int life = 0;
+	};
 
 private:
 	inline static App* s_pApp = nullptr;
@@ -41,4 +48,11 @@ private:
 	float m_playerMove = 0.f;
 	float second = 0;
 	int difficulty = 4;
+
+	// Info
+	gInfo m_gInfo;
+
+	// Camera
+	cpu_camera m_p45Cam;
+	cpu_camera m_p90Cam;
 };

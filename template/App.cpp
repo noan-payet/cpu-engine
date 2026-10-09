@@ -26,11 +26,46 @@ void App::SpawnObject()
 
 	//float time = cpuTime.total;
 	//pObject->transform.OrbitAroundAxis(m_pCenter->transform.pos, CPU_VEC3_UP, 3.f, time * 2.f);
-	pObject->transform.SetPosition(cos(rand() % 6 + 1) * 3, 10.f, sin(rand() % 6 + 1) * 3);
+	float angle = rand() % 6 + 1;
+	pObject->transform.SetPosition(cos(angle) * 3, 10.f, sin(angle) * 3);
 	//pObject->transform.SetPosition(0,0,0);
 
 	//pObject->transform.Move(1.5f);
+
 	m_object.push_back(pObject);
+}
+
+void App::ObjectCollision()
+{
+	for (auto it = m_object.begin(); it != m_object.end(); ++it)
+	{
+		cpu_entity* pObject = *it;
+
+		float oRadius = pObject->sphere.radius + pObject->transform.sca.y;
+		float cRadius = m_pCatcher->sphere.radius + m_pCatcher->transform.sca.y;
+
+		float dRadius = oRadius + cRadius;
+
+		//XMFLOAT3 oPos = pObject->sphere.center;
+		//XMFLOAT3 cPos = m_pCatcher->sphere.center;
+
+		FXMVECTOR oPos = XMLoadFloat3(&pObject->sphere.center);
+		GXMVECTOR cPos = XMLoadFloat3(&m_pCatcher->sphere.center);
+
+		XMVECTOR vPos = cPos - oPos;
+		vPos = vPos * vPos;
+		float vX = XMVectorGetX(vPos);
+		float vY = XMVectorGetY(vPos);
+		float vZ = XMVectorGetZ(vPos);
+
+		float dPos = sqrt(vX + vY + vZ);
+
+		if (dPos <= dRadius)
+		{
+			m_gInfo.score++;
+			cpuEngine.Release(pObject);
+		}
+	}
 }
 
 void App::OnStart()
@@ -58,8 +93,22 @@ void App::OnStart()
 
 	m_objectSpeed = 10.f;
 
-	cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f *3, -8.f*3);
-	cpuEngine.GetCamera()->transform.AddYPR(0.f, 45 * (XM_PI / 180));
+	// Player Info
+	m_gInfo.life = 3;
+	m_gInfo.score = 0;
+
+	// Camera
+	cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f * 3, -8.f * 3);
+
+	m_p45Cam = *cpuEngine.GetCamera();
+	m_p90Cam = *cpuEngine.GetCamera();
+
+	m_p45Cam.transform.AddYPR(0.f, 45 * (XM_PI / 180));
+	m_p90Cam.transform.AddYPR(0.f, 90 * (XM_PI / 180));
+
+	cpuEngine.GetCamera()->transform.quat = m_p45Cam.transform.quat;
+	cpuEngine.GetCamera()->transform.SetRotationFromQuaternion();
+	
 }
 
 void App::OnUpdate()
@@ -67,6 +116,22 @@ void App::OnUpdate()
 	// YOUR CODE HERE
 	float dt = cpuTime.delta;
 	float time = cpuTime.total;
+
+	// Camera Mode
+	if (cpuInput.vi.IsKeyPressed(VK_F1))
+	{
+		cpuEngine.GetCamera()->transform.quat = m_p45Cam.transform.quat;
+		cpuEngine.GetCamera()->transform.SetRotationFromQuaternion();
+
+		cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f * 3, -8.f * 3);
+	}
+	if (cpuInput.vi.IsKeyPressed(VK_F2))
+	{
+		cpuEngine.GetCamera()->transform.quat = m_p90Cam.transform.quat;
+		cpuEngine.GetCamera()->transform.SetRotationFromQuaternion();
+
+		cpuEngine.GetCamera()->transform.SetPosition(0.f, 10.f * 3, 0.f);
+	}
 
 	// Player Move
 	if (cpuInput.IsLeft())
@@ -83,24 +148,30 @@ void App::OnUpdate()
 	{
 		SpawnObject();
 		second = 0;
-		if (difficulty != 1)
+		if (difficulty != 2 && m_gInfo.score % 10 == 1)
 			difficulty -= 1;
 	}
+
+	// Collision
+	ObjectCollision();
 
 	// Move missiles
 	for (auto it = m_object.begin(); it != m_object.end(); ++it)
 	{
 		cpu_entity* pMissile = *it;
 		pMissile->transform.pos.y -= dt;
-		if (pMissile->lifetime > 10.0f)
-			cpuEngine.Release(pMissile);
+		/*if (pMissile->lifetime > 12.0f)
+			cpuEngine.Release(pMissile);*/
 	}
 
 	// Purge missiles
 	for (auto it = m_object.begin(); it != m_object.end(); )
 	{
 		if ((*it)->dead)
+		{
 			it = m_object.erase(it);
+			/*m_gInfo.life--;*/
+		}
 		else
 			++it;
 	}
@@ -142,13 +213,15 @@ void App::OnRender(int pass)
 		// Debug
 		cpu_stats& stats = *cpuEngine.GetStats();
 		std::string info = CPU_STR(cpuTime.fps) + " fps, ";
-		info += CPU_STR(stats.drawnTriangleCount) + " triangles, ";
-		info += CPU_STR(stats.clipEntityCount) + " clipped entities\n";
+		info += CPU_STR(stats.drawnTriangleCount) + " triangles\n";
+		/*info += CPU_STR(stats.clipEntityCount) + " clipped entities\n";
 		info += CPU_STR(m_object.size()) + " missiles, ";
 		info += CPU_STR(cpuEngine.GetParticleData()->alive) + " particles, ";
 		info += CPU_STR(stats.threadCount) + " threads, ";
 		info += CPU_STR(stats.tileCount) + " tiles,";
-		info += " time " + CPU_STR(cpuTime.total);
+		info += " time " + CPU_STR(cpuTime.total);*/
+		info += CPU_STR(m_gInfo.life) + " life, ";
+		info += CPU_STR(m_gInfo.score) + " score";
 
 		// Ray cast
 		cpu_ray ray;
