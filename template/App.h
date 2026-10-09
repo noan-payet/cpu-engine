@@ -32,15 +32,19 @@ private:
 	cpu_font m_font;
 	cpu_mesh m_meshSphere;
 	cpu_mesh m_meshObject;
+	cpu_mesh m_meshCircle;
+	cpu_mesh m_meshCenterCircle;
 	
 	// UI
 	// Shader
 	cpu_material m_materialCatcher;
 	cpu_material m_materialObject;
+	cpu_material m_materialCircle;
 
 	// 3D
 	cpu_entity* m_pCatcher;
-	cpu_entity* m_pCenter;
+	cpu_entity* m_pCircle;
+	cpu_entity* m_pCenterCircle;
 	std::list<cpu_entity*> m_object;
 	float m_objectSpeed;
 

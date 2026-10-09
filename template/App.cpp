@@ -76,15 +76,26 @@ void App::OnStart()
 	m_font.Create(cpuDevice.GetHeight() <= 512 ? 14 : 28);
 	m_meshSphere.CreateSphere(2.0f, 12, 12);
 	m_meshObject.CreateSphere(2.0f, 12, 12);
+	XMFLOAT3 black = { 0,0,0 };
+	m_meshCircle.CreateCircle(3.5f, 360, black);
+	m_meshCenterCircle.CreateCircle(2.5f, 360);
 
 	// UI
 	// Shader
 	m_materialCatcher.ps = MyPixelShader;
 	m_materialObject.ps = ObjectShader;
+	m_materialCircle.ps = MyPixelShader;
 
 	// 3D
-	m_pCenter = cpuEngine.CreateEntity();
-	m_pCenter->transform.SetPosition(0.f, 0.f, 0.f);
+	m_pCircle = cpuEngine.CreateEntity();
+	m_pCircle->transform.SetPosition(0.f, 0.f, 0.f);
+	m_pCircle->pMesh = &m_meshCircle;
+	m_pCircle->pMaterial = &m_materialCircle;
+
+	m_pCenterCircle = cpuEngine.CreateEntity();
+	m_pCenterCircle->transform.SetPosition(0.f, 0.5f, 0.f);
+	m_pCenterCircle->pMesh = &m_meshCenterCircle;
+	m_pCenterCircle->pMaterial = &m_materialCircle;
 
 	m_pCatcher = cpuEngine.CreateEntity();
 	m_pCatcher->pMesh = &m_meshSphere;
@@ -139,7 +150,7 @@ void App::OnUpdate()
 	if (cpuInput.IsRight())
 		m_playerMove += dt * 2.f;
 
-	m_pCatcher->transform.SetPosition(cos(m_playerMove) * 3, 0.f, sin(m_playerMove) * 3);
+	m_pCatcher->transform.SetPosition(cos(m_playerMove) * 3, 0.5f, sin(m_playerMove) * 3);
 
 	// Object Spawn
 	second += dt;
